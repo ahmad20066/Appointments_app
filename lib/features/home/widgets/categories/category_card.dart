@@ -23,7 +23,7 @@ class CategoryCard extends StatelessWidget {
         Navigator.pushNamed(context, ExpertsScreen.routeName);
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10.w),
+        margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
         decoration: BoxDecoration(
           color: Colors.white,
           shape: BoxShape.circle,

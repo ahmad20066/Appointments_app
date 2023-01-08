@@ -14,12 +14,13 @@ class CategoryService {
   getCategories() async {
     try {
       final url = Uri.parse(EndPoints.category);
-      await locator.get<LocalRepo>().getToken();
-      final token = locator.get<LocalRepo>().token;
-      final response = await http.get(url, headers: Network.getheaders(token));
-      print(response.body);
+
+      final response = await http.get(url, headers: Network.getheaders());
+
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
+        print("Categories");
+        print(jsonEncode(response.body));
         final categories = (jsonResponse['categorys'] as List)
             .map((e) => CategoryModel.fromJson(e))
             .toList();
@@ -27,6 +28,26 @@ class CategoryService {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  searchCategories(String search) async {
+    try {
+      final url = Uri.parse(EndPoints.searchCategory + '?search=$search');
+      final headers = Network.getheaders();
+      final response = await http.get(url, headers: headers);
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        print("Categories Search");
+        print(jsonEncode(response.body));
+        final categories = (jsonResponse['categorys'] as List)
+            .map((e) => CategoryModel.fromJson(e))
+            .toList();
+        return categories;
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
     }
   }
 }

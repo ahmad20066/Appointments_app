@@ -1,8 +1,10 @@
+import 'package:appointments/common/local/local_repo.dart';
+import 'package:appointments/locator.dart';
+
 class Network {
-  static Map<String, String> getheaders(token) {
+  static Map<String, String> getheaders() {
     return {
-      "Content-Type": "application/json; charset=UTF-8",
-      'token': token,
+      'token': locator.get<LocalRepo>().token!,
     };
   }
 }

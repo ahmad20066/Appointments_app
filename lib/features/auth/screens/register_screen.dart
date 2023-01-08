@@ -1,5 +1,6 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:appointments/common/widgets/custom_snackbar.dart';
+import 'package:appointments/common/widgets/error_popup.dart';
 import 'package:appointments/common/widgets/title_widget.dart';
 import 'package:appointments/constants/global_variables.dart';
 import 'package:appointments/features/auth/providers/auth_provider.dart';
@@ -111,6 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                 ),
                 CustomTextField(
                     textController: confirmController,
+                    action: TextInputAction.done,
                     isPrivate: true,
                     labelText: 'Confirm Password',
                     preIcon: Icons.check,
@@ -133,6 +135,14 @@ class _RegisterScreenState extends State<RegisterScreen>
                     ? CircularProgressIndicator()
                     : CustomButton(
                         function: () async {
+                          if (confirmController.text !=
+                              passwordController.text) {
+                            showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    ErrorPopUp(e: "Passwords dont match"));
+                            return;
+                          }
                           if (value == 1) {
                             Navigator.push(
                                 context,
@@ -155,8 +165,19 @@ class _RegisterScreenState extends State<RegisterScreen>
                                     emailController.text,
                                     passwordController.text,
                                     'normal')) {
+                              print('aaaa');
+                              await Provider.of<AuthProvider>(context,
+                                      listen: false)
+                                  .login(emailController.text,
+                                      passwordController.text, true, context);
                               Navigator.pushNamed(
                                   context, TabsScreen.routeName);
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => ErrorPopUp(
+                                      e: Provider.of<AuthProvider>(context)
+                                          .message!));
                             }
 
                             setState(() {

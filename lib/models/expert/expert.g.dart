@@ -13,18 +13,21 @@ ExpertModel _$ExpertModelFromJson(Map<String, dynamic> json) => ExpertModel(
       image: json['image'] as String,
       Phone_Number: json['Phone_Number'].toString(),
       address: json['address'] as String,
-      rating: (json['rating'] as num).toDouble(),
+      rating: json['rating'] == null ? 0 : (json['rating'] as num).toDouble(),
       category: json['category'] as String,
-      experience: (json['experience'] as List).map((e) {
-        return ExperienceModel.frommap(e);
-      }).toList(),
-      consultation: (json['consulation'] as List).map((e) {
-        return ConsultationModel.frommap(e);
-      }).toList(),
       specialization: json['specialization'] as String,
-      availabletime: (json['availabletime'] as List).map((e) {
-        return AvailableTime.fromMap(e);
-      }).toList(),
+      experience: (json['experience'] as List<dynamic>)
+          .map((e) => ExperienceModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      consultation: (json['consulation'] as List<dynamic>)
+          .map((e) => ConsultationModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      availabletime: (json['availabletime'] as List<dynamic>)
+          .map((e) => AvailableTime.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      registeraton: (json['registeraton'] as List<dynamic>)
+          .map((e) => Registeration.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ExpertModelToJson(ExpertModel instance) =>
@@ -37,4 +40,8 @@ Map<String, dynamic> _$ExpertModelToJson(ExpertModel instance) =>
       'address': instance.address,
       'rating': instance.rating,
       'category': instance.category,
+      'specialization': instance.specialization,
+      'experience': instance.experience,
+      'consultation': instance.consultation,
+      'availabletime': instance.availabletime,
     };

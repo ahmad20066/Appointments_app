@@ -1,4 +1,4 @@
-class PopularExpert {
+class WishListItem {
   final int id;
   final String name;
   final String email;
@@ -9,7 +9,7 @@ class PopularExpert {
   final String category;
   final String specialization;
 
-  PopularExpert(
+  WishListItem(
       {required this.id,
       required this.name,
       required this.email,
@@ -19,15 +19,15 @@ class PopularExpert {
       required this.rating,
       required this.category,
       required this.specialization});
-  factory PopularExpert.fromMap(Map<String, dynamic> map) {
-    return PopularExpert(
+  factory WishListItem.fromMap(Map<String, dynamic> map) {
+    return WishListItem(
         id: map['id'],
         name: map['name'],
         email: map['email'],
         image: map['image'],
-        Phone_Number: map['Phone_Number'],
+        Phone_Number: map['Phone_Number'].toString(),
         address: map['address'],
-        rating: map['rating'],
+        rating: map['rating'].toDouble(),
         category: map['category'],
         specialization: map['specialization']);
   }

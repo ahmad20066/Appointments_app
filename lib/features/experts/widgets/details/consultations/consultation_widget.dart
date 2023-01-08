@@ -1,6 +1,7 @@
 import 'package:appointments/features/experts/widgets/details/consultations/available_times_list.dart';
 import 'package:appointments/models/consultaion/consultation_model.dart';
 import 'package:appointments/models/time/available_times.dart';
+import 'package:appointments/models/time/registeration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,9 +9,9 @@ import '../../../../../constants/global_variables.dart';
 
 class ConsultationWidget extends StatelessWidget {
   final ConsultationModel consultation;
-  final List<AvailableTime> availableTimes;
+  final List<Registeration> registerations;
   const ConsultationWidget(
-      {super.key, required this.consultation, required this.availableTimes});
+      {super.key, required this.consultation, required this.registerations});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,9 @@ class ConsultationWidget extends StatelessWidget {
           SizedBox(
             height: 10.h,
           ),
-          AvailabletimesList(times: availableTimes)
+          AvailabletimesList(
+            conId: consultation.id,
+          )
         ],
       ),
     );

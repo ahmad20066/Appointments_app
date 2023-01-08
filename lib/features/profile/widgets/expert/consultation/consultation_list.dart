@@ -15,7 +15,8 @@ class ConsultaionList extends StatefulWidget {
 class _ConsultaionListState extends State<ConsultaionList> {
   @override
   Widget build(BuildContext context) {
-    final consultations = Provider.of<UserProvider>(context).consultations;
+    final consultations =
+        Provider.of<UserProvider>(context).currentUser!.consultation!;
     return ListView.builder(
       padding: EdgeInsets.zero,
       physics: NeverScrollableScrollPhysics(),
@@ -24,11 +25,6 @@ class _ConsultaionListState extends State<ConsultaionList> {
       itemBuilder: (context, index) {
         return ConsultationCard(
           consultation: consultations[index],
-          onDissmiss: () {
-            Provider.of<UserProvider>(context, listen: false)
-                .deleteConsultation(consultations[index].id);
-            Navigator.pop(context);
-          },
         );
       },
     );

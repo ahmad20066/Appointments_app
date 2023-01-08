@@ -1,10 +1,12 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:appointments/common/widgets/custom_button.dart';
 import 'package:appointments/common/widgets/custom_textfield.dart';
+import 'package:appointments/common/widgets/error_popup.dart';
 import 'package:appointments/common/widgets/title_widget.dart';
 import 'package:appointments/features/auth/providers/auth_provider.dart';
 import 'package:appointments/features/auth/widgets/background_image.dart';
 import 'package:appointments/features/auth/widgets/check_box.dart';
+import 'package:appointments/features/profile/providers/user_provider.dart';
 import 'package:appointments/features/tab/tabscreen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,8 @@ import 'dart:math' as math;
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
+import '../../../constants/global_variables.dart';
 
 class LogInScreen extends StatefulWidget {
   static const routeName = '/login';
@@ -25,7 +29,7 @@ class _LogInScreenState extends State<LogInScreen>
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
-
+  bool saveToken = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +76,7 @@ class _LogInScreenState extends State<LogInScreen>
                     textController: passwordController,
                     labelText: 'Password',
                     pMargin: 20,
+                    action: TextInputAction.done,
                     hmargin: 30,
                     isPrivate: true,
                     preIcon: Icons.lock_outline,
@@ -79,7 +84,25 @@ class _LogInScreenState extends State<LogInScreen>
                   SizedBox(
                     height: 20,
                   ),
-                  CheckBoxWidget(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Checkbox(
+                          side: BorderSide(color: Colors.white, width: 2),
+                          activeColor: Colors.white,
+                          checkColor: GLobalVariables.baseColor,
+                          value: saveToken,
+                          onChanged: (value) {
+                            setState(() {
+                              saveToken = !saveToken;
+                            });
+                          }),
+                      Text(
+                        'Keep Me Signed In',
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
+                  ),
                   isLoading
                       ? CircularProgressIndicator()
                       : CustomButton(
@@ -90,10 +113,25 @@ class _LogInScreenState extends State<LogInScreen>
                             });
                             if (await Provider.of<AuthProvider>(context,
                                     listen: false)
-                                .login(emailController.text,
-                                    passwordController.text)) {
+                                .login(
+                                    emailController.text,
+                                    passwordController.text,
+                                    saveToken,
+                                    context)) {
+                              await Provider.of<UserProvider>(context,
+                                      listen: false)
+                                  .getProfile();
                               Navigator.pushNamed(
                                   context, TabsScreen.routeName);
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return ErrorPopUp(
+                                        e: Provider.of<AuthProvider>(context,
+                                                listen: false)
+                                            .message!);
+                                  });
                             }
 
                             setState(() {

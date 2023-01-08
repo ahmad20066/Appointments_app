@@ -1,6 +1,7 @@
 import 'package:appointments/common/widgets/custom_appbar.dart';
 import 'package:appointments/common/widgets/title_widget.dart';
 import 'package:appointments/constants/global_variables.dart';
+import 'package:appointments/features/experts/screens/categories_screen.dart';
 import 'package:appointments/features/home/widgets/categories/categories_list.dart';
 import 'package:appointments/features/home/widgets/experts/popular_experts_list.dart';
 import 'package:appointments/features/home/widgets/experts/popular_experts_row.dart';
@@ -49,7 +50,10 @@ class HomeScreen extends StatelessWidget {
                       style: TextButton.styleFrom(
                           padding: EdgeInsets.all(10.sp),
                           side: BorderSide(color: Colors.white, width: 3.w)),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(CategoriesScreen.routeName);
+                      },
                       child: Text(
                         'See All',
                         style: TextStyle(color: Colors.white, fontSize: 16.sp),

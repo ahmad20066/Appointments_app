@@ -11,40 +11,41 @@ class ExpertsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            color: GLobalVariables.baseColor,
-            height: MediaQuery.of(context).size.height / 4,
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 100.h,
-                child: Align(
-                  alignment: Alignment(-0.9, 0.5),
-                  child: Container(
-                    child: BackButton(
-                      color: Colors.white,
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              color: GLobalVariables.baseColor,
+              height: MediaQuery.of(context).size.height / 4,
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 100.h,
+                  child: Align(
+                    alignment: Alignment(-0.9, 0.5),
+                    child: Container(
+                      child: BackButton(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment(-1, 1),
-                child: TitleWidget(
-                  text: 'Find Your Expert',
-                  size: 25.sp,
+                Align(
+                  alignment: Alignment(-1, 1),
+                  child: TitleWidget(
+                    text: 'Find Your Expert',
+                    size: 25.sp,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              TagsList(),
-              ExpertsList()
-            ],
-          ),
-        ],
+                SizedBox(
+                  height: 20.h,
+                ),
+                ExpertsList()
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

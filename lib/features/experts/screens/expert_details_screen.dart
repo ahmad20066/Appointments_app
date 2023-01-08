@@ -1,5 +1,7 @@
+import 'package:appointments/common/local/helpers.dart';
 import 'package:appointments/common/widgets/middleText.dart';
 import 'package:appointments/constants/end_points.dart';
+import 'package:appointments/features/experts/providers/experts_provider.dart';
 import 'package:appointments/features/experts/widgets/details/consultations/details_consultaion_list.dart';
 import 'package:appointments/features/experts/widgets/details/experience/details_experience_list.dart';
 import 'package:appointments/features/experts/widgets/details/info_widget.dart';
@@ -9,6 +11,7 @@ import 'package:appointments/features/profile/widgets/info_row.dart';
 import 'package:appointments/models/expert/expert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants/global_variables.dart';
 
@@ -28,7 +31,8 @@ class _ExpertDetailsState extends State<ExpertDetails> {
   @override
   void didChangeDependencies() {
     expert = ModalRoute.of(context)!.settings.arguments as ExpertModel;
-
+    Provider.of<ExpertsProvider>(context, listen: false).currentExpertId =
+        expert!.id;
     super.didChangeDependencies();
   }
 
@@ -72,8 +76,7 @@ class _ExpertDetailsState extends State<ExpertDetails> {
                               ),
                               Spacer(),
                               Text(
-                                expert!.name[0].toUpperCase() +
-                                    expert!.name.substring(1).toLowerCase(),
+                                Helpers.capitalize(expert!.name),
                                 style: TextStyle(
                                     fontSize: 22.sp,
                                     fontWeight: FontWeight.bold,
@@ -81,10 +84,9 @@ class _ExpertDetailsState extends State<ExpertDetails> {
                               ),
                               Spacer(),
                               Text(
-                                expert!.specialization[0].toUpperCase() +
-                                    expert!.specialization
-                                        .substring(1)
-                                        .toLowerCase(),
+                                Helpers.capitalize(expert!.specialization)
+                                    .substring(1)
+                                    .toLowerCase(),
                                 style: TextStyle(color: Colors.white),
                               ),
                               SizedBox(
@@ -139,7 +141,7 @@ class _ExpertDetailsState extends State<ExpertDetails> {
               MiddleText(text: 'Consultations'),
               DetailsConsultationsList(
                 consultations: expert!.consultation,
-                availableTimes: expert!.availabletime,
+                registerations: expert!.registeraton,
               ),
             ],
           ),

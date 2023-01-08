@@ -1,7 +1,9 @@
 import 'package:appointments/features/experts/screens/expert_details_screen.dart';
+import 'package:appointments/features/wishlist/providers/wishlist_provider.dart';
 import 'package:appointments/models/expert/expert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../constants/end_points.dart';
 
@@ -23,14 +25,45 @@ class PopularExpertCard extends StatelessWidget {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.sp)),
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.network(
-                '${EndPoints.baseUrl}/images/expert/${expert.image}',
-                height: 150.h,
-                width: 190.w,
-                fit: BoxFit.cover,
-              ),
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.network(
+                    '${EndPoints.baseUrl}/images/expert/${expert.image}',
+                    height: 150.h,
+                    width: 190.w,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                  bottom: 40.h,
+                  right: 10.w,
+                  child: CircleAvatar(
+                      radius: 25.sp,
+                      backgroundColor: Colors.white,
+                      child: IconButton(
+                          onPressed: () async {
+                            if (await Provider.of<WishListProvider>(context,
+                                    listen: false)
+                                .addToWishlist(expert.id)) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text("Item added to wishlist"),
+                                duration: Duration(seconds: 4),
+                                backgroundColor: Colors.green,
+                              ));
+                            }
+                          },
+                          icon: Icon(
+                            Provider.of<WishListProvider>(context)
+                                    .isInWishlist(expert.id)
+                                ? Icons.favorite
+                                : Icons.favorite_outline,
+                            size: 25.sp,
+                          ))),
+                )
+              ],
             ),
             SizedBox(
               height: 20.h,

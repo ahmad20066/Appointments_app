@@ -14,6 +14,10 @@ class LocalRepo {
     return token;
   }
 
+  vartoken(String token2) {
+    token = token2;
+  }
+
   clear() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.clear();

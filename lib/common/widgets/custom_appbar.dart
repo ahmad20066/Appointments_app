@@ -1,5 +1,7 @@
+import 'package:appointments/features/profile/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({Key? key}) : super(key: key);
@@ -17,24 +19,24 @@ class CustomAppBar extends StatelessWidget {
         Column(
           children: [
             Text(
-              'Ahmad Afif',
+              Provider.of<UserProvider>(context).currentUser!.name,
               style:
                   TextStyle(color: Colors.white, fontFamily: '', fontSize: 15),
             ),
             SizedBox(
               height: 5.h,
             ),
-            Row(
-              children: [
-                Icon(
-                  Icons.location_on_outlined,
-                  color: Colors.white,
-                  size: 15.sp,
-                ),
-                Text('Damascus Syria',
-                    style: TextStyle(color: Colors.white, fontFamily: ''))
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Icon(
+            //       Icons.location_on_outlined,
+            //       color: Colors.white,
+            //       size: 15.sp,
+            //     ),
+            //     Text(Provider.of<UserProvider>(context).currentUser!.address!,
+            //         style: TextStyle(color: Colors.white, fontFamily: ''))
+            //   ],
+            // ),
           ],
         ),
         CircleAvatar(

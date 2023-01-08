@@ -14,7 +14,8 @@ class ExperienceList extends StatefulWidget {
 class _ExperienceListState extends State<ExperienceList> {
   @override
   Widget build(BuildContext context) {
-    final experiences = Provider.of<UserProvider>(context).experiences;
+    final experiences =
+        Provider.of<UserProvider>(context).currentUser!.experience!;
     return ListView.builder(
       padding: EdgeInsets.zero,
       physics: NeverScrollableScrollPhysics(),
@@ -23,11 +24,6 @@ class _ExperienceListState extends State<ExperienceList> {
       itemBuilder: (context, index) {
         return ExperienceCard(
           experience: experiences[index],
-          onDissmiss: () {
-            Provider.of<UserProvider>(context, listen: false)
-                .deleteExperience(experiences[index].id);
-            Navigator.pop(context);
-          },
         );
       },
     );

@@ -28,13 +28,6 @@ class InfoRow extends StatelessWidget {
             color: isFill ? GLobalVariables.baseColor : Colors.white,
             fontSize: 15.sp),
       ),
-      trailing: IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.edit,
-            color: isFill ? GLobalVariables.baseColor : Colors.white,
-            size: 20.sp,
-          )),
     );
   }
 }

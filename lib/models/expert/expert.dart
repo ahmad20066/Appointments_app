@@ -1,6 +1,7 @@
 import 'package:appointments/models/consultaion/consultation_model.dart';
 import 'package:appointments/models/experience/experience_model.dart';
 import 'package:appointments/models/time/available_times.dart';
+import 'package:appointments/models/time/registeration.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'expert.g.dart';
@@ -19,6 +20,7 @@ class ExpertModel {
   final List<ExperienceModel> experience;
   final List<ConsultationModel> consultation;
   final List<AvailableTime> availabletime;
+  final List<Registeration> registeraton;
   ExpertModel({
     required this.id,
     required this.name,
@@ -32,6 +34,7 @@ class ExpertModel {
     required this.experience,
     required this.consultation,
     required this.availabletime,
+    required this.registeraton,
   });
   factory ExpertModel.fromJson(Map<String, dynamic> json) =>
       _$ExpertModelFromJson(json);
